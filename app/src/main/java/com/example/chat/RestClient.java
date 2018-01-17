@@ -11,9 +11,17 @@ public class RestClient {
 
     public static final String ANDROID_EMULATOR_LOCALHOST = "172.16.13.43";
     public static final String SERVER_PORT = "8080";
-
-    private static RestClient instance;
     private static final Object lock = new Object();
+    private static RestClient instance;
+    private final ExampleRepository mExampleRepository;
+
+    private RestClient() {
+        Retrofit retrofit = new Retrofit.Builder().baseUrl("http://" + ANDROID_EMULATOR_LOCALHOST + ":" + SERVER_PORT + "/")
+                .addConverterFactory(GsonConverterFactory.create())
+                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+                .build();
+        mExampleRepository = retrofit.create(ExampleRepository.class);
+    }
 
     public static RestClient getInstance() {
         RestClient instance = RestClient.instance;
@@ -26,16 +34,6 @@ public class RestClient {
             }
         }
         return instance;
-    }
-
-    private final ExampleRepository mExampleRepository;
-
-    private RestClient() {
-        Retrofit retrofit = new Retrofit.Builder().baseUrl("http://" + ANDROID_EMULATOR_LOCALHOST + ":" + SERVER_PORT + "/")
-                .addConverterFactory(GsonConverterFactory.create())
-                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
-                .build();
-        mExampleRepository = retrofit.create(ExampleRepository.class);
     }
 
     public ExampleRepository getExampleRepository() {

@@ -33,12 +33,11 @@ import static com.example.chat.RestClient.ANDROID_EMULATOR_LOCALHOST;
 public class MainActivity extends AppCompatActivity {
 
     private static final String TAG = "MainActivity";
-
+    private final SimpleDateFormat mTimeFormat = new SimpleDateFormat("HH:mm:ss", Locale.getDefault());
     private SimpleAdapter mAdapter;
     private List<String> mDataSet = new ArrayList<>();
     private StompClient mStompClient;
     private Disposable mRestPingDisposable;
-    private final SimpleDateFormat mTimeFormat = new SimpleDateFormat("HH:mm:ss", Locale.getDefault());
     private RecyclerView mRecyclerView;
     private Gson mGson = new GsonBuilder().create();
 

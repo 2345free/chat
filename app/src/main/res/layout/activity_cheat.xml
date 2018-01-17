@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -11,25 +10,24 @@
         android:id="@+id/et_inputMsg"
         android:layout_width="match_parent"
         android:layout_height="40dp"
-        android:hint="输入发送消息"
-        android:layout_margin="10dp"/>
+        android:layout_margin="10dp"
+        android:hint="输入发送消息" />
 
     <Button
         android:id="@+id/btn_click_send"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="点击发送"/>
+        android:text="点击发送" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="服务器的消息:"/>
+        android:text="服务器的消息:" />
 
     <TextView
         android:id="@+id/tv_service_msg"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
-
 
 
 </LinearLayout>

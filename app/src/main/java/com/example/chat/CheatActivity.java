@@ -26,41 +26,38 @@ import static com.example.chat.RestClient.ANDROID_EMULATOR_LOCALHOST;
 
 public class CheatActivity extends AppCompatActivity {
 
+    private static final String TAG = "CheatActivity";
     private EditText etInput;
     private Button btnSend;
     private TextView tvService;
-
-    private StringBuffer sb=new StringBuffer();
-
+    private StringBuffer sb = new StringBuffer();
     private StompClient mStompClient;
-
-    private static final String TAG="CheatActivity";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cheat);
 
-        etInput=(EditText) findViewById(R.id.et_inputMsg);
-        btnSend=(Button)findViewById(R.id.btn_click_send);
-        tvService=(TextView)findViewById(R.id.tv_service_msg);
+        etInput = findViewById(R.id.et_inputMsg);
+        btnSend = findViewById(R.id.btn_click_send);
+        tvService = findViewById(R.id.tv_service_msg);
         createStompClient();
         registerStompTopic();
 
         btnSend.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String msg=etInput.getText().toString().trim();
-                JSONObject jsonObject=new JSONObject();
+                String msg = etInput.getText().toString().trim();
+                JSONObject jsonObject = new JSONObject();
 
                 try {
-                    jsonObject.put("userId","kobe");
-                    jsonObject.put("message",msg);
+                    jsonObject.put("userId", "kobe");
+                    jsonObject.put("message", msg);
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
 
-                mStompClient.send("/app/cheat",jsonObject.toString()).subscribe(new Subscriber<Void>() {
+                mStompClient.send("/app/cheat", jsonObject.toString()).subscribe(new Subscriber<Void>() {
                     @Override
                     public void onSubscribe(Subscription s) {
                         s.request(Long.MAX_VALUE);
@@ -87,7 +84,6 @@ public class CheatActivity extends AppCompatActivity {
     }
 
 
-
     private void createStompClient() {
         String url = "ws://" + ANDROID_EMULATOR_LOCALHOST
                 + ":" + RestClient.SERVER_PORT + "/hello/websocket";
@@ -99,7 +95,7 @@ public class CheatActivity extends AppCompatActivity {
                 .subscribe(lifecycleEvent -> {
                     switch (lifecycleEvent.getType()) {
                         case OPENED:
-                            Log.i(TAG,"Stomp connection opened");
+                            Log.i(TAG, "Stomp connection opened");
                             toast("Stomp connection opened");
                             break;
                         case ERROR:
@@ -130,8 +126,8 @@ public class CheatActivity extends AppCompatActivity {
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                String msg=stompMessage.getPayload();
-                sb.append(msg+"-->");
+                String msg = stompMessage.getPayload();
+                sb.append(msg + "-->");
                 tvService.setText(sb.toString());
 
             }
